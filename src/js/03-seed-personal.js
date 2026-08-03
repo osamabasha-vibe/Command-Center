@@ -1,0 +1,18 @@
+/* Default personal board — only used on a first run with no saved data */
+function seedPersonal(){return{
+ cos:[{id:'g1',name:'Cars',color:'#D85A30'},{id:'g2',name:'Boat',color:'#4a9eff'},{id:'g3',name:'Real Estate',color:'#22a878'},{id:'g4',name:'Health',color:'#0fa8a0'},{id:'g5',name:'Travel',color:'#d48d1a'},{id:'g6',name:'Admin',color:'#8b72e0'}],
+ projects:[
+ {id:'q1',name:'Boat refit',co:'g2',st:'active',team:[],ideas:[],goals:[G('Sea-ready by next season',[{t:'Install Garmin 8616',w:'Osama',d:1},{t:'Calibrate autopilot',w:'Osama',d:0},{t:'Mount LP reel + SureSeal',w:'Osama',d:0},{t:'Full sea trial',w:'Osama',d:0}])]},
+ {id:'q2',name:'Taycan 4S fix',co:'g1',st:'active',team:[],ideas:[],goals:[G('Back on the road',[{t:'Diagnose battery + charger',w:'Osama',d:1},{t:'Order parts',w:'Osama',d:0},{t:'Book service slot',w:'Osama',d:0}])]},
+ {id:'q3',name:'Aston AC repair',co:'g1',st:'active',team:[],ideas:[],goals:[G('Fix AC after Texas shipment',[{t:'Get diagnostic quote',w:'Osama',d:0},{t:'Approve repair',w:'Osama',d:0}])]},
+ {id:'q7',name:'Cayman 981 maintenance',co:'g1',st:'active',team:[],ideas:[],goals:[G('Complete Turkey service run',[{t:'Book Turkey service center',w:'Osama',d:0},{t:'Complete full maintenance',w:'Osama',d:0}])]},
+ {id:'q4',name:'Jeddah property',co:'g3',st:'active',team:[],ideas:[],goals:[G('Buy ~$250K in Obhur / Al Shati',[{t:'Define target areas',w:'Osama',d:1},{t:'View 5 shortlisted units',w:'Osama',d:0},{t:'Make first offer',w:'Osama',d:0}])]},
+ {id:'q8',name:'Bogotá co-investment',co:'g3',st:'active',team:[],ideas:[],goals:[G('Evaluate Colombia property, plan exit',[{t:'Do due diligence',w:'Osama',d:1},{t:'Update A Hayel',w:'Osama',d:1},{t:'Airbnb license',w:'Osama',d:0},{t:'Respond to appeal',w:'Osama',d:0},{t:'Check',w:'Osama',d:0},{t:'Follow up',w:'Osama',d:0}])]},
+ {id:'q9',name:'Essex condo dispute',co:'g3',st:'active',team:[],ideas:[],goals:[G('Resolve TSCC 1577 / 1959 board issues',[{t:'Document board dispute history',w:'Osama',d:1},{t:'File formal complaint',w:'Osama',d:0}])]},
+ {id:'q11',name:'House prep',co:'g3',st:'active',team:[],ideas:[],goals:[G('Prep house before move-in',[{t:'Tiles',w:'Osama',d:0},{t:'Curtains',w:'Osama',d:0},{t:'Dresser',w:'Osama',d:0},{t:'Jacuzzi',w:'Osama',d:0},{t:'Sofa cleaners',w:'Osama',d:0},{t:'Outdoor seating',w:'Osama',d:0}])]},
+ {id:'q12',name:'Airbnb procedures (Yasser)',co:'g3',st:'active',team:[],ideas:[],goals:[G('Set up Airbnb operations with Yasser',[{t:'Arrange with Yasser, bring contractor',w:'Osama',d:1},{t:'Cleaning checklist on Claude',w:'Osama',d:1},{t:'Furniture list',w:'Osama',d:1}])]},
+ {id:'q5',name:'Gym routine',co:'g4',st:'active',team:[],ideas:[],goals:[G('4 sessions weekly, consistent',[{t:'Set weekly schedule',w:'Osama',d:1},{t:'Hit 4 sessions this week',w:'Osama',d:0}])]},
+ {id:'q10',name:'Outside errands',co:'g6',st:'active',team:[],ideas:[],goals:[G('Complete outside admin errands',[{t:'Bank account commercial',w:'Osama',d:0},{t:'STC home internet',w:'Osama',d:0},{t:'Driver license appointment — medical exam',w:'Osama',d:0},{t:'Transfer car',w:'Osama',d:0}])]},
+ {id:'q13',name:'Remove Fkry videos',co:'g6',st:'active',team:[],ideas:[],goals:[G('Remove Fkry videos',[{t:'Remove Fkry videos',w:'Osama',d:0}])]},
+ {id:'q14',name:'Bill Nazar',co:'g6',st:'active',team:[],ideas:[],goals:[G('Settle Bill Nazar',[{t:'Bill Nazar',w:'Osama',d:0}])]},
+ {id:'q6',name:'i8 storage + shipping',co:'g1',st:'paused',team:[],ideas:[],goals:[G('Store then ship the i8',[{t:'Arrange storage',w:'Osama',d:1},{t:'Book shipping (Mar 31 reminder)',w:'Osama',d:0}])]}]};}

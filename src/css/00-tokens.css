@@ -1,0 +1,20 @@
+:root{
+  --bg:#0d0d0f;--s1:#161619;--s2:#1e1e23;--s3:#2a2a31;
+  --bd:rgba(255,255,255,.07);--bd2:rgba(255,255,255,.14);--bd3:rgba(255,255,255,.28);
+  --t:#f2f1ea;--t2:#83838f;--t3:#4d4d58;
+  --nx:#4a9eff;--nx-bg:rgba(74,158,255,.11);--nx-bd:rgba(74,158,255,.5);
+  --dn:#22a878;--am:#d48d1a;--rd:#e05252;--r:9px;--shadow:none;
+}
+body.light{
+  --bg:#eeece6;--s1:#ffffff;--s2:#f4f2ec;--s3:#e6e3da;
+  --bd:rgba(30,30,40,.13);--bd2:rgba(30,30,40,.22);--bd3:rgba(30,30,40,.42);
+  --t:#191918;--t2:#565660;--t3:#8a8a94;
+  --nx:#155fc0;--nx-bg:rgba(21,95,192,.08);--nx-bd:rgba(21,95,192,.5);
+  --dn:#0c7a52;--am:#996008;--rd:#bb2f2f;
+  --shadow:0 1px 3px rgba(20,20,30,.08),0 1px 2px rgba(20,20,30,.05);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;background:var(--bg);color:var(--t);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;line-height:1.5;overflow:hidden;}
+.app{display:grid;grid-template-columns:210px 1fr;height:100vh;}
+[contenteditable]{outline:none;}
+[contenteditable]:empty:before{content:attr(data-ph);color:var(--t3);}

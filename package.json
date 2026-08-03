@@ -1,0 +1,15 @@
+{
+  "name": "command-center",
+  "version": "1.0.0",
+  "description": "Project and task board for a multi-company operator. Zero dependencies.",
+  "private": true,
+  "scripts": {
+    "build": "node build.js",
+    "test": "node build.js && node test/features.test.js",
+    "start": "node build.js && python3 server/server.py",
+    "serve": "python3 server/server.py",
+    "check": "node build.js && node --check dist/worker.js && node test/features.test.js"
+  },
+  "engines": { "node": ">=18" },
+  "license": "UNLICENSED"
+}

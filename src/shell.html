@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Command Center</title>
+<style>
+/* {{CSS}} */
+</style>
+</head>
+<body>
+<div class="app">
+<div class="sb">
+  <div class="sb-scroll" id="sbscroll">
+    <div class="sb-sec"><div class="sb-t">Companies<button class="plus" onclick="addCo()">+</button></div></div>
+    <div id="colist"></div>
+    <div class="sb-sec bt"><div class="sb-t">Projects<button class="plus" onclick="addProj('active')">+</button></div></div>
+    <div id="pjlist"></div>
+    <div class="sb-sec bt" id="ppl-hdr">
+      <div class="sb-t">People<button class="plus" onclick="addPerson()">+</button></div>
+      <div class="sb-search"><input id="q" placeholder="Search…" oninput="rSB()"></div>
+    </div>
+    <div id="sbl" ondragover="trOver(event)" ondragleave="trLeave(event)" ondrop="trDrop(event)"></div>
+  </div>
+</div>
+<div class="mn">
+  <div class="nav">
+    <div class="brand">Command <b>Center</b></div>
+    <div class="sep"></div>
+    <button class="nb on" id="nb-board" onclick="go('board')">Board</button>
+    <button class="nb" id="nb-focus" onclick="go('focus')">My Focus</button>
+    <button class="nb" id="nb-people" onclick="go('people')">People</button>
+    <div class="right">
+      <div class="seg">
+        <button id="sp-work" class="on" onclick="setSpace('work')">Work</button>
+        <button id="sp-personal" onclick="setSpace('personal')">Personal</button>
+      </div>
+      <span id="srvBadge" style="font-size:10px;color:var(--t3);min-width:44px;text-align:right"></span>
+      <button class="icobtn" id="fileBtn" onclick="connectFile()" title="Connect a file on your computer">🖫</button>
+      <button class="icobtn" onclick="openRestore()" title="Restore / backup data">⟲</button>
+      <button class="icobtn" onclick="toggleTheme()" title="Light / dark">◐</button>
+    </div>
+  </div>
+  <div class="ct">
+    <div id="v-board" class="vw on"></div>
+    <div id="v-focus" class="vw"></div>
+    <div id="v-people" class="vw"></div>
+  </div>
+</div>
+</div>
+<div class="ov" id="ov" onclick="if(event.target===this)closePop()"><div class="pop" id="pop"></div></div>
+<div class="ov" id="rov" onclick="if(event.target===this)closeRestore()"><div class="pop" id="rpop" style="max-width:560px"></div></div>
+<script>
+/* {{JS}} */
+</script>
+</body>
+</html>
