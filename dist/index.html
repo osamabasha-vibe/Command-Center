@@ -502,14 +502,17 @@ function load(){try{const d=localStorage.getItem('cc9');return d?JSON.parse(d):n
 /* ===== 11-storage.js ===== */
 /* Persistence: localStorage, local server API, cloud API */
 const SERVER=location.protocol==='http:'||location.protocol==='https:';
+function ccPass(){return localStorage.getItem('cc_pass')||'';}
+function ccHeaders(){return{'Content-Type':'application/json','X-CC-Pass':ccPass()};}
+function askPass(msg){const p=prompt(msg||'Enter your Command Center password');if(p===null)return false;localStorage.setItem('cc_pass',p);return true;}
 let srvTimer=null,srvState='local';
 function setSrvBadge(txt,color){const b=document.getElementById('srvBadge');if(b){b.textContent=txt;b.style.color=color||'var(--t3)';}}
 function pushServer(){
   clearTimeout(srvTimer);
   srvTimer=setTimeout(()=>{
     setSrvBadge('saving…','var(--am)');
-    fetch('/api/data',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(store)})
-      .then(r=>{if(!r.ok)throw 0;setSrvBadge('saved','var(--dn)');setTimeout(()=>setSrvBadge('','var(--t3)'),1400);})
+    fetch('/api/data',{method:'POST',headers:ccHeaders(),body:JSON.stringify(store)})
+      .then(r=>{if(r.status===401){if(askPass('Wrong or missing password. Try again:'))pushServer();throw 0;}if(!r.ok)throw 0;setSrvBadge('saved','var(--dn)');setTimeout(()=>setSrvBadge('','var(--t3)'),1400);})
       .catch(()=>setSrvBadge('offline','var(--rd)'));
   },500);
 }
@@ -521,7 +524,8 @@ function save(){
 async function pullServer(){
   if(!SERVER)return;
   try{
-    const r=await fetch('/api/data',{cache:'no-store'});
+    let r=await fetch('/api/data',{cache:'no-store',headers:ccHeaders()});
+    if(r.status===401){if(!askPass('Enter your Command Center password'))return;r=await fetch('/api/data',{cache:'no-store',headers:ccHeaders()});}
     if(!r.ok)throw 0;
     const d=await r.json();
     if(d&&(d.work||d.personal)){

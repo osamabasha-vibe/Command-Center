@@ -2,8 +2,11 @@
 /**
  * Build: src/ -> dist/
  *
- *   dist/index.html   single self-contained file (local + local-server use)
- *   dist/worker.js    Cloudflare Worker with the app embedded
+ *   dist/index.html   single self-contained file. Works standalone (file or
+ *                      local server) and, unchanged, against the Netlify
+ *                      Function backend in netlify/functions/api.mjs — the
+ *                      password-header logic below is a no-op until a
+ *                      password-gated /api/data starts returning 401.
  *
  * All CSS and JS files are concatenated in filename order, so the numeric
  * prefixes control load order. Everything shares one global scope on purpose:
@@ -49,24 +52,21 @@ function build() {
     throw new Error('shell.html is missing a {{CSS}} or {{JS}} placeholder');
   }
 
-  const html = shell
+  const shellHtml = shell
     .replace('/* {{CSS}} */', css)
     .replace('/* {{JS}} */', js);
+
+  // always include the password-header logic: harmless against a server
+  // that never 401s (local server, file mode), required against the
+  // password-gated Netlify Function.
+  const html = addCloudAuth(shellHtml);
 
   fs.mkdirSync(DIST, { recursive: true });
   fs.writeFileSync(path.join(DIST, 'index.html'), html);
 
-  // cloud build: same app plus the password header on API calls
-  const cloudHtml = addCloudAuth(html);
-  const worker = fs
-    .readFileSync(path.join(SRC, 'worker.template.js'), 'utf8')
-    .replace('/*{{HTML}}*/', escapeForTemplate(cloudHtml));
-  fs.writeFileSync(path.join(DIST, 'worker.js'), worker);
-
   const kb = (n) => (n / 1024).toFixed(1) + ' KB';
   console.log(`  ${cssFiles.length} css + ${jsFiles.length} js files`);
   console.log(`  dist/index.html  ${kb(html.length)}`);
-  console.log(`  dist/worker.js   ${kb(worker.length)}`);
 }
 
 function addCloudAuth(html) {
@@ -98,10 +98,6 @@ function askPass(msg){const p=prompt(msg||'Enter your Command Center password');
   out = out.replace(getFrom, getTo);
 
   return out;
-}
-
-function escapeForTemplate(str) {
-  return str.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$\{/g, '\\${');
 }
 
 try {

@@ -13,10 +13,12 @@ npm test           # headless functional tests against dist/index.html
 npm start          # local server on http://localhost:8787
 ```
 
-There are no dependencies. No install step. Node for build and tests, Python 3
-for the server, both stdlib only. Do not add a bundler, a framework, or a
-package manager dependency without being asked — the zero-dependency property
-is deliberate and load-bearing.
+The frontend has no dependencies and no install step. Node for build and
+tests, Python 3 for the local server, both stdlib only. The one exception is
+`@netlify/blobs`, used exclusively by `netlify/functions/api.mjs` for the
+online deploy — it never touches `src/`. Do not add a bundler, a framework, or
+another package manager dependency without being asked — the zero-dependency
+property of the frontend is deliberate and load-bearing.
 
 ## Architecture
 
@@ -27,11 +29,11 @@ src/
   shell.html              page skeleton with {{CSS}} and {{JS}} placeholders
   css/*.css               concatenated in filename order
   js/*.js                 concatenated in filename order
-  worker.template.js      Cloudflare Worker, app injected at /*{{HTML}}*/
-build.js                  assembles everything
-dist/index.html           deployable single file
-dist/worker.js            deployable Cloudflare Worker
+build.js                  assembles everything, patches in password headers
+dist/index.html           deployable single file (local, server, and Netlify)
 server/server.py          local server, stores data.json on disk
+netlify/functions/api.mjs Netlify Function backing /api/data on Netlify Blobs
+netlify.toml              Netlify build/publish/functions config
 test/features.test.js     headless tests with a hand-rolled DOM stub
 ```
 
@@ -90,7 +92,8 @@ one must also purge it from `store.order`.
 Three modes, chosen automatically:
 
 1. **Cloud** — served over http(s) with a password. POSTs to `/api/data` with
-   an `X-CC-Pass` header. Cloudflare Worker + KV.
+   an `X-CC-Pass` header. Netlify Function (`netlify/functions/api.mjs`) +
+   Netlify Blobs.
 2. **Local server** — same `/api/data` endpoints, no password, `data.json` on
    disk with a timestamped snapshot before every write.
 3. **File** — opened as a local file. localStorage plus, in Chrome and Edge, a
@@ -105,11 +108,12 @@ This has already gone wrong once. In earlier versions each rebuild used a new
 localStorage key and silently orphaned everything the user had entered. Rules
 that follow from that:
 
-- Do not change the localStorage key (`cc9`) or the KV key (`board`).
+- Do not change the localStorage key (`cc9`) or the Blobs key (`board`).
 - Any change to the data shape needs a migration in `10-state.js` that runs
   against old data, not a fresh seed.
 - Seed data is for a genuinely empty store only. Never overwrite a populated one.
-- Keep the snapshot-before-write behaviour in the server and worker.
+- Keep the snapshot-before-write behaviour in the server and the Netlify
+  Function (the latter via timestamped `backup:` keys, pruned after 60 days).
 
 ## Rendering
 
